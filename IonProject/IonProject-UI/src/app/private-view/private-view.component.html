@@ -1,0 +1,7 @@
+<div class="privateView" style="text-align:center;">
+    <label class="pageLabel">Private</label>
+    <button type="button" class="btn btn-primary" style="position:absolute;top:50%" (click)="onLogout()">
+        <span class="spinner-border spinner-border-sm" *ngIf="logoutAction == 'Logging Out'" role="status" aria-hidden="true"></span>
+        {{logoutAction}}
+      </button>
+</div>
