@@ -1,29 +1,33 @@
-.formContainer{
+.formContainer {
     width: 100%;
     text-align: center;
     top: 30%;
     position: absolute;
 }
-.loginForm{
+
+.loginForm {
     width: 250px;
     height: 232px;
     margin: auto;
     margin-bottom: 20px;
 }
+
 .form-label {
     font-size: 18px;
     color: lime;
     line-height: 1.8;
 }
-.btnWidth{
+
+.btnWidth {
     width: 85px;
 }
-.searchErrorResponse{
+
+.searchErrorResponse {
     height: auto;
     width: 100%;
     font-size: 12px;
     padding: 5px;
     float: left;
-    margin-bottom: 0px!important;
-    z-index: 1;  
-    }
+    margin-bottom: 0px !important;
+    z-index: 1;
+}

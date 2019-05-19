@@ -13,7 +13,7 @@ export class WelcomeViewComponent implements OnInit {
   ngOnInit() {
     this.http.changeLoginStatus('Not Logged In');
   }
-  onLogin(){
-    this.router.navigate(['welcomePage/login'], {skipLocationChange: true})
+  onLogin() {
+    this.router.navigate(['welcomePage/login'], { skipLocationChange: true })
   }
 }

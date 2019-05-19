@@ -13,19 +13,19 @@ export class LoginComponent implements OnInit {
     'username': [''],
     'password': ['']
   });
-  usernameVal = '';
-  passwordVal = '';
+  usernameVal: string = '';
+  passwordVal: string = '';
   submitButtonAction = 'Submit';
   errorMessage: string;
-  errorResponse = false;
-  usernameErrorResponse = false;
-  passwordErrorResponse = false;
+  errorResponse: boolean = false;
+  usernameErrorResponse: boolean = false;
+  passwordErrorResponse: boolean = false;
   constructor(private fb: FormBuilder, private router: Router, private http: HttpService) { }
 
   ngOnInit() {
     this.http.changeLoginStatus('Not Logged In');
   }
-  isSubmitDisabled() {
+  isSubmitDisabled(): boolean {
     if (this.usernameErrorResponse === false && this.passwordErrorResponse === false
       && this.loginForm.get('username').value !== ''
       && this.loginForm.get('password').value !== '') {
@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  validateValue(value, inputType) {
-    const enteredVal = value;
+  validateValue(value: any, inputType: string) {
+    const enteredVal: any = value;
     if (inputType === 'username') {
       this.usernameErrorResponse = false;
     } else if (inputType === 'password') {
@@ -59,8 +59,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/welcomePage'], { skipLocationChange: true })
   }
   onSubmitForm() {
-    const username = this.loginForm.get('username').value;
-    const password = this.loginForm.get('password').value;
+    const username: any = this.loginForm.get('username').value;
+    const password: any = this.loginForm.get('password').value;
     this.http.changeLoginStatus('Logging In');
     this.submitButtonAction = 'Logging In';
     this.http.authenticateUser(username, password).subscribe((response) => {
@@ -72,7 +72,11 @@ export class LoginComponent implements OnInit {
         this.http.changeLoginStatus('Not Logged In');
         this.submitButtonAction = 'Submit';
         if (err.error.status === false) {
-          this.usernameErrorResponse = true;
+          if (err.error.errorParam.toLowerCase() === 'username') {
+            this.usernameErrorResponse = true;
+          } else if (err.error.errorParam.toLowerCase() === 'password') {
+            this.passwordErrorResponse = true;
+          }
           this.errorMessage = err.error.errorMessage;
         } else {
           this.usernameErrorResponse = true;

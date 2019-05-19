@@ -1,45 +1,61 @@
 var express = require('express');
 var cors = require('cors')
-var fs = require("fs");
+var fs = require('fs');
 
 var app = express();
 
 app.use(cors({ credentials: true }));
 
-var stream = fs.createReadStream("./data.json");
-
-var readFileData = function (path, username) {
+var readFileData = function (path, queryParam) {
     return promise = new Promise(function (resolve, reject) {
         fs.readFile(path, function (err, data) {
             let responseObj = {
-                status: true,
-                errorMessage: ''
+                status: false,
+                errorMessage: '',
+                errorParam: ''
             };
-            exitLoop = false;
+            let usernameFoundCount = 0;
             if (err) {
                 reject(err);
             } else {
-                JSON.parse(data).forEach(element => {
-                    if (element.username.toUpperCase() === username.toUpperCase()) {
+                JSON.parse(data).every(element => {
+                    if (element.username === queryParam.username) {
+                        if (element.password === queryParam.password) {
+                            responseObj.status = true;
+                            responseObj.errorMessage = '';
+                            responseObj.errorParam = '';
+                            resolve(responseObj);
+                        } else {
+                            usernameFoundCount++;
+                            responseObj.status = false;
+                        }
+                    } else {
                         responseObj.status = false;
-                        exitLoop = true;
-                        responseObj.errorMessage = 'Error:  Username already exists';
-                        reject(JSON.stringify(responseObj));
+                        responseObj.errorParam = 'username';
+                        responseObj.errorMessage = 'Error: Username Not Found'
+                    }
+                    if (responseObj.status) {
+                        return false;
+                    } else {
+                        return true;
                     }
                 });
-                resolve(responseObj);
+                if (usernameFoundCount > 0 && responseObj.status === false) {
+                    responseObj.errorParam = 'password';
+                    responseObj.errorMessage = 'Error: Incorrect Password';
+                    reject(JSON.stringify(responseObj));
+                } else if (responseObj.status === false) {
+                    reject(JSON.stringify(responseObj));
+                }
             }
         });
     })
 }
 
 app.get('/', function (req, res) {
-    let responseObj = {
-        status: true,
-        errorMessage: ''
-    };
-    res.setTimeout((Math.floor(Math.random() * 3) + 1) * 1000, function () {
-        readFileData("./data.json", req.query.username).then(function (data) {
+    const requestWaitTime = (Math.floor(Math.random() * 3) + 1) * 1000;
+    res.setTimeout(requestWaitTime, function () {
+        readFileData("./data.json", req.query).then(function (data) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(data));
         }).catch(function (err) {

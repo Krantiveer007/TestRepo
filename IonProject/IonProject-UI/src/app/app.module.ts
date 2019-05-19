@@ -15,7 +15,7 @@ import { PrivateViewComponent } from 'src/app/private-view/private-view.componen
 import { WelcomeViewComponent } from './welcome-view/welcome-view.component';
 
 const appRoutes: Routes = [
-  { path: 'welcomePage/login', component: LoginComponent},
+  { path: 'welcomePage/login', component: LoginComponent },
   {
     path: 'welcomePage',
     component: WelcomeViewComponent,

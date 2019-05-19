@@ -8,7 +8,7 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./private-view.component.css']
 })
 export class PrivateViewComponent implements OnInit {
-  logoutAction = 'LOGOUT';
+  logoutAction: string = 'LOGOUT';
   constructor(private router: Router, private http: HttpService) { }
 
   ngOnInit() {
