@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   }
   isSubmitDisabled(): boolean {
     if (this.usernameErrorResponse === false && this.passwordErrorResponse === false
-      && this.loginForm.get('username').value !== ''
-      && this.loginForm.get('password').value !== '') {
+      && this.loginForm.get('username').value.trim() !== ''
+      && this.loginForm.get('password').value.trim() !== '') {
       return false;
     } else {
       return true;
@@ -59,8 +59,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/welcomePage'], { skipLocationChange: true })
   }
   onSubmitForm() {
-    const username: any = this.loginForm.get('username').value;
-    const password: any = this.loginForm.get('password').value;
+    const username: any = this.loginForm.get('username').value.trim();
+    const password: any = this.loginForm.get('password').value.trim();
     this.http.changeLoginStatus('Logging In');
     this.submitButtonAction = 'Logging In';
     this.http.authenticateUser(username, password).subscribe((response) => {
