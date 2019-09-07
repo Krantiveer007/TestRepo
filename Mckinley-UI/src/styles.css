@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background-image: url("/assets/images/space-desk-office-background.jpg");
+}
+
+.pageLabel {
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+    top: 25%;
+    position: absolute;
+}

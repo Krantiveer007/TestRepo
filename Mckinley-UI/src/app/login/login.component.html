@@ -1,0 +1,19 @@
+<div class="formContainer">
+  <form [formGroup]="loginForm" class="loginForm">
+    <label class="form-label"> Username </label>
+    <input type="text" class="form-control" [(ngModel)]="usernameVal" (input)="validateValue(usernameVal, 'username')"
+      placeholder="Start typing..." formControlName="username">
+    <div class='alert alert-danger searchErrorResponse' *ngIf='usernameErrorResponse'>{{errorMessage}}</div>
+    <label class="form-label"> Password</label>
+    <input type="text" class="form-control" [(ngModel)]="passwordVal" (input)="validateValue(passwordVal, 'password')"
+      placeholder="Start typing..." formControlName="password">
+    <div class='alert alert-danger searchErrorResponse' *ngIf='passwordErrorResponse'>{{errorMessage}}</div>
+  </form>
+  <button type="button" class="btn btn-primary" [disabled]="isSubmitDisabled()" (click)="onSubmitForm()"
+    style="margin-right:10px">
+    <span class="spinner-border spinner-border-sm" *ngIf="submitButtonAction == 'Logging In'" role="status"
+      aria-hidden="true"></span>
+    {{submitButtonAction}}
+  </button>
+  <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+</div>
